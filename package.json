@@ -1,0 +1,19 @@
+{
+  "name": "TapToPay",
+  "description": "hardware button that alows you to pay anywhere",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
+  "dependencies": {
+  	"request" : "*",
+  	"underscore" : "*",
+    "colors": "*",
+    "hiredis" : "*",
+    "redis" : "*",
+    "express": "3.X",
+    "gpio" : "*"
+  }
+}
