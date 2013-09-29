@@ -60,7 +60,8 @@ app.post('/api/result', function (req, res){
 	if (result == 'OK') {
 		gpio22.set();
 	}
-}
+});
+
 app.post('/api/fump', function (req, res){
 	gpio22.set(0);
 	var response = [];
