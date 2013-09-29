@@ -7,6 +7,35 @@ child;
 var port = process.env.PORT || 5000;
 var gpio22;
 
+player = exec('gpio mode 0 out',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+player = exec('gpio mode 2 out',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+player = exec('gpio mode 3 out',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+
+
 function blueOn(){
 	player = exec('gpio write 0 0',
 		function(error,stdout,stderr){
