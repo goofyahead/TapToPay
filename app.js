@@ -62,12 +62,12 @@ app.post('/api/result', function (req, res){
 	var result = req.body.result;
 
 	if (result == 'OK') {
-		gpio22.set();
+		// gpio22.set();
 	}
 });
 
 app.post('/api/fump', function (req, res){
-	gpio22.set(0);
+	// gpio22.set(0);
 	var response = [];
 	var currentTimeStamp = req.body.timestamp;
 	var currentId = req.body.id;
