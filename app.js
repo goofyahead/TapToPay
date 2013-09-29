@@ -47,6 +47,9 @@ var gpio4 = gpio.export(4, {
 
    	gpio4.on("change", function(val){
    		if (val == 1){
+   			 gpio2.write(11, 0, function() {          // Set pin 16 high (1)
+		        gpio2.close(11);                     // Close pin 16
+		    });
    			console.log('BUTTON WAS PUSHED!'.green);
    			var myts = new Date().getTime();
    			var currentId = 'vendor';
