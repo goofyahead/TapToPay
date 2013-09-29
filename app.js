@@ -9,8 +9,11 @@ var gpio22;
 gpio22 = gpio.export(17, {
    ready: function() {
    		console.log('led working');
-   		gpio22.set(function () {
-   			console.log('should be up');
+   		gpio22.set(0,function () {
+   			gpio.set(1, function () {
+   				console.log('should be up');
+   			});
+   			
    		});
    }
 });
