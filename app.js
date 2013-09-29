@@ -20,6 +20,14 @@ var gpio22;
 //    }
 // });
 
+var gpio2 = require("pi-gpio");
+
+gpio2.open(11, "output", function(err) {     // Open pin 16 for output
+    gpio2.write(11, 1, function() {          // Set pin 16 high (1)
+        gpio2.close(11);                     // Close pin 16
+    });
+});
+
 var gpio4 = gpio.export(4, {
    direction: "in",
    ready: function() {
@@ -27,15 +35,15 @@ var gpio4 = gpio.export(4, {
    	console.log('*  Ready to work  *');
    	console.log('*******************');
 
-   	player = exec('gpio write 0 1',
-						function(error,stdout,stderr){
-							if (error) {
-								console.log(error.stack);
-								console.log('player: Error code: '+error.code);
-							}
-							console.log('player Child Process STDOUT: '+stdout);
-							console.log('player Child Process STDERR: '+stderr);
-						});
+   	// player = exec('gpio write 0 1',
+				// 		function(error,stdout,stderr){
+				// 			if (error) {
+				// 				console.log(error.stack);
+				// 				console.log('player: Error code: '+error.code);
+				// 			}
+				// 			console.log('player Child Process STDOUT: '+stdout);
+				// 			console.log('player Child Process STDERR: '+stderr);
+				// 		});
 
    	gpio4.on("change", function(val){
    		if (val == 1){
