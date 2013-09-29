@@ -167,6 +167,10 @@ app.post('/api/result', function (req, res){
 	if (result == 'OK') {
 		// gpio22.set();
 		greenBlink();
+		res.send(200);
+	} else {
+		greenBlink();
+		res.send(200);
 	}
 });
 
