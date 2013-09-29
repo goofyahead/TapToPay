@@ -6,6 +6,7 @@ var exec = require('child_process').exec,
 child;
 var port = process.env.PORT || 5000;
 var gpio22;
+var TIME_THRESHOLD = 1400;
 
 player = exec('gpio mode 0 out',
 		function(error,stdout,stderr){
@@ -177,7 +178,7 @@ function check(currentTimeStamp, currentId, response) {
 	console.log('number of fumps in comparison ' + Object.keys(fumpers).length);
 	for (var key in fumpers) {
 		console.log("compairing: " + Math.abs(currentTimeStamp - fumpers[key].timeStamp));
-		if (Math.abs(currentTimeStamp - fumpers[key].timeStamp) < 800 && currentId != fumpers[key].id) {
+		if (Math.abs(currentTimeStamp - fumpers[key].timeStamp) < TIME_THRESHOLD && currentId != fumpers[key].id) {
 			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount };
 			response.push(elementResponse);
 			console.log("added to reponse one match " + JSON.stringify(fumpers[key]));
