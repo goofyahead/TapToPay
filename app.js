@@ -22,25 +22,9 @@ var gpio22;
 
 var gpio2 = require("pi-gpio");
 
-gpio2.open(11, "output", function(err) {     // Open pin 16 for output
-    gpio2.write(11, 1, function() {          // Set pin 16 high (1)                  // Close pin 16
-    	setTimeout(function (){
-    		gpio2.write(11, 0, function (){});
-        	gpio2.open(13, "output", function(err) {     // Open pin 16 for output
-		    gpio2.write(13, 1, function() {          // Set pin 16 high (1)
-		        // gpio2.close(11);                     // Close pin 16
-		        setTimeout(function (){
-		        	gpio2.write(13, 0, function (){});
-		        	gpio2.open(15, "output", function(err) {     // Open pin 16 for output
-				    gpio2.write(15, 1, function() {          // Set pin 16 high (1)
-				        // gpio2.close(11);                     // Close pin 16
-				    });
-				});
-		        }, 1000);
-		    });
-		});
-        }, 1000);
-    	
+gpio2.open(13, "output", function(err) {     // Open pin 16 for output
+    gpio2.write(13, 1, function() {          // Set pin 16 high (1)                  // Close pin 16
+    	console.log('glow');
     });
 });
 
