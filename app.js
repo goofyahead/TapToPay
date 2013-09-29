@@ -177,7 +177,7 @@ var fumpers = new Object();
 function check(currentTimeStamp, currentId, response) {
 	console.log('number of fumps in comparison ' + Object.keys(fumpers).length);
 	for (var key in fumpers) {
-		console.log("compairing: " + Math.abs(currentTimeStamp - fumpers[key].timeStamp));
+		//console.log("compairing: " + Math.abs(currentTimeStamp - fumpers[key].timeStamp));
 		if (Math.abs(currentTimeStamp - fumpers[key].timeStamp) < TIME_THRESHOLD && currentId != fumpers[key].id) {
 			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount };
 			response.push(elementResponse);
