@@ -155,7 +155,7 @@ var gpio4 = gpio.export(4, {
 			if (val == 1){
 				console.log('BUTTON WAS PUSHED!'.green);
 				var myts = new Date().getTime();
-				var currentId = 'taptopaymerchant@gmail.com';
+				var currentId = globalVendor;
 				var currentElement = { timeStamp : myts, id : globalVendor, amount: globalAmount, 
 					store: globalStore, item : globalItem};
 				var currentKey = myts + currentId;
