@@ -218,6 +218,7 @@ app.post('/api/fump', function (req, res){
 
 	if (response.length == 0) {
 		setTimeout(function(){ 
+			console.log('checking with ' + currentTimeStamp + ' and ' + currentId);
 			check(currentTimeStamp, currentId, response);
 			console.log('delay check');
 			console.log('number of fumps ' + fumpers.length);
