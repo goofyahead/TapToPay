@@ -6,7 +6,7 @@ var port = process.env.PORT || 5000;
 var gpio22;
 
 // Flashing lights if LED connected to GPIO22
-gpio22 = gpio.export(22, {
+gpio22 = gpio.export(17, {
    ready: function() {
    		console.log('led working');
    		gpio22.set(function () {
@@ -15,29 +15,29 @@ gpio22 = gpio.export(22, {
    }
 });
 
-var gpio4 = gpio.export(4, {
-   direction: "in",
-   ready: function() {
-   	console.log('*******************');
-   	console.log('*  Ready to work  *');
-   	console.log('*******************');
+// var gpio4 = gpio.export(4, {
+//    direction: "in",
+//    ready: function() {
+//    	console.log('*******************');
+//    	console.log('*  Ready to work  *');
+//    	console.log('*******************');
 
-   	gpio4.on("change", function(val){
-   		if (val == 1){
-   			console.log('BUTTON WAS PUSHED!'.green);
-   			var myts = new Date().getTime();
-   			var currentId = 'vendor';
-   			var currentElement = { timeStamp : myts, id : currentId };
-			var currentKey = myts + currentId;
-			fumpers[currentKey] = currentElement;
+//    	gpio4.on("change", function(val){
+//    		if (val == 1){
+//    			console.log('BUTTON WAS PUSHED!'.green);
+//    			var myts = new Date().getTime();
+//    			var currentId = 'vendor';
+//    			var currentElement = { timeStamp : myts, id : currentId };
+// 			var currentKey = myts + currentId;
+// 			fumpers[currentKey] = currentElement;
 
-   			var response = [];
-   			check(myts, currentId, response);
-   			console.log('respones was ' + response);
-   		}
-   	});
-   }
-});
+//    			var response = [];
+//    			check(myts, currentId, response);
+//    			console.log('respones was ' + response);
+//    		}
+//    	});
+//    }
+// });
 
 app.configure(function(){
 	app.use(express.static(__dirname + '/public'));
