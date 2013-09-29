@@ -8,6 +8,7 @@ var gpio22;
 // Flashing lights if LED connected to GPIO22
 gpio22 = gpio.export(25, {
    ready: function() {
+   		gpio22.set();
    }
 });
 
