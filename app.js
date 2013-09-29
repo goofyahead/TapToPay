@@ -233,7 +233,7 @@ app.post('/api/fump', function (req, res){
 	} else {
 		blueOn();
 		console.log('MATCH MAKED'.green);
-		res.send(response);
+		res.send(response[0]);
 	}
 });
 
