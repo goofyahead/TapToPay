@@ -3,7 +3,7 @@ var colors = require("colors");
 var express = require('express');
 var app = express();
 var exec = require('child_process').exec,
-    child;
+child;
 var port = process.env.PORT || 5000;
 var gpio22;
 
@@ -15,7 +15,7 @@ var gpio22;
 //    			gpio.set(1, function () {
 //    				console.log('should be up');
 //    			});
-   			
+
 //    		});
 //    }
 // });
@@ -23,17 +23,33 @@ var gpio22;
 var gpio2 = require("pi-gpio");
 
 gpio2.open(11, "output", function(err) {     // Open pin 16 for output
-    gpio2.write(11, 1, function() {          // Set pin 16 high (1)
-        // gpio2.close(11);                     // Close pin 16
+    gpio2.write(11, 1, function() {          // Set pin 16 high (1)                  // Close pin 16
+    	setTimeout(function (){
+    		gpio2.write(11, 0, function (){});
+        	gpio2.open(13, "output", function(err) {     // Open pin 16 for output
+		    gpio2.write(13, 1, function() {          // Set pin 16 high (1)
+		        // gpio2.close(11);                     // Close pin 16
+		        setTimeout(function (){
+		        	gpio2.write(13, 0, function (){});
+		        	gpio2.open(15, "output", function(err) {     // Open pin 16 for output
+				    gpio2.write(15, 1, function() {          // Set pin 16 high (1)
+				        // gpio2.close(11);                     // Close pin 16
+				    });
+				});
+		        }, 1000);
+		    });
+		});
+        }, 1000);
+    	
     });
 });
 
 var gpio4 = gpio.export(4, {
-   direction: "in",
-   ready: function() {
-   	console.log('*******************');
-   	console.log('*  Ready to work  *');
-   	console.log('*******************');
+	direction: "in",
+	ready: function() {
+		console.log('*******************');
+		console.log('*  Ready to work  *');
+		console.log('*******************');
 
    	// player = exec('gpio write 0 1',
 				// 		function(error,stdout,stderr){
@@ -45,24 +61,24 @@ var gpio4 = gpio.export(4, {
 				// 			console.log('player Child Process STDERR: '+stderr);
 				// 		});
 
-   	gpio4.on("change", function(val){
-   		if (val == 1){
+gpio4.on("change", function(val){
+	if (val == 1){
    			 gpio2.write(11, 0, function() {          // Set pin 16 high (1)
 		        // gpio2.close(11);                     // Close pin 16
 		    });
-   			console.log('BUTTON WAS PUSHED!'.green);
-   			var myts = new Date().getTime();
-   			var currentId = 'vendor';
-   			var currentElement = { timeStamp : myts, id : currentId };
-			var currentKey = myts + currentId;
-			fumpers[currentKey] = currentElement;
+   			 console.log('BUTTON WAS PUSHED!'.green);
+   			 var myts = new Date().getTime();
+   			 var currentId = 'vendor';
+   			 var currentElement = { timeStamp : myts, id : currentId };
+   			 var currentKey = myts + currentId;
+   			 fumpers[currentKey] = currentElement;
 
-   			var response = [];
-   			check(myts, currentId, response);
-   			console.log('respones was ' + response);
-   		}
-   	});
-   }
+   			 var response = [];
+   			 check(myts, currentId, response);
+   			 console.log('respones was ' + response);
+   			}
+   		});
+}
 });
 
 app.configure(function(){
