@@ -3,8 +3,15 @@ var colors = require("colors");
 var express = require('express');
 var app = express();
 var port = process.env.PORT || 5000;
+var gpio22;
 
-var gpio4 = gpio.export(7, {
+// Flashing lights if LED connected to GPIO22
+gpio22 = gpio.export(25, {
+   ready: function() {
+   }
+});
+
+var gpio4 = gpio.export(4, {
    direction: "in",
    ready: function() {
    	console.log('*******************');
@@ -48,6 +55,14 @@ function check(currentTimeStamp, currentId, response) {
 }
 
 app.post('/api/fump', function (req, res){
+	var result = req.body.result;
+
+	if (result == 'OK') {
+		gpio22.set();
+	}
+}
+app.post('/api/fump', function (req, res){
+	gpio22.set(0);
 	var response = [];
 	var currentTimeStamp = req.body.timestamp;
 	var currentId = req.body.id;
