@@ -235,7 +235,7 @@ app.post('/api/fump', function (req, res){
 			check(currentTimeStamp, currentId, response);
 			console.log('delay check');
 			console.log('number of fumps ' + Object.keys(fumpers).length);
-			res.send({'response_delayed': response});
+			res.send({id: 'no'});
 			if (response.length != 0){
 				blueOn();
 				console.log('MATCH MAKED'.green);
