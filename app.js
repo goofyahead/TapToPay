@@ -84,6 +84,30 @@ function greenBlink() {
 	}, 1500);
 }
 
+function redBlink() {
+	player = exec('gpio write 2 0',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+
+	setTimeout(function () {
+		player = exec('gpio write 2 1',
+			function(error,stdout,stderr){
+				if (error) {
+					console.log(error.stack);
+					console.log('player: Error code: '+error.code);
+				}
+				console.log('player Child Process STDOUT: '+stdout);
+				console.log('player Child Process STDERR: '+stderr);
+			});
+	}, 1500);
+}
+
 function setOff() {
 	player = exec('gpio write 0 1', function(error,stdout,stderr){});
 	player = exec('gpio write 2 1', function(error,stdout,stderr){});
@@ -176,7 +200,7 @@ app.post('/api/result', function (req, res){
 
 app.post('/api/fump', function (req, res){
 	// gpio22.set(0);
-	blueOn();
+	
 
 	var response = [];
 	var currentTimeStamp = req.body.timestamp;
@@ -203,6 +227,7 @@ app.post('/api/fump', function (req, res){
 			},2000);
 		}, 1000);
 	} else {
+		blueOn();
 		res.send({'response_ok': response});
 		setTimeout(function(){
 			delete fumpers[currentKey];
