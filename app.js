@@ -84,6 +84,12 @@ function greenBlink() {
 	}, 1500);
 }
 
+function setOff() {
+	player = exec('gpio write 0 1', function(error,stdout,stderr){});
+	player = exec('gpio write 2 1', function(error,stdout,stderr){});
+	player = exec('gpio write 3 1', function(error,stdout,stderr){});
+}
+
 function blinkBlue() {
 	player = exec('gpio write 0 0',
 		function(error,stdout,stderr){
@@ -114,6 +120,8 @@ var gpio4 = gpio.export(4, {
 		console.log('*******************');
 		console.log('*  Ready to work  *');
 		console.log('*******************');
+
+		setOff();
 
 		blinkBlue();
 
