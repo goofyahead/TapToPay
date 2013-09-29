@@ -7,6 +7,30 @@ child;
 var port = process.env.PORT || 5000;
 var gpio22;
 
+function blinkBlue() {
+	player = exec('gpio write 0 0',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+
+	setTimeout(function () {
+		player = exec('gpio write 0 1',
+			function(error,stdout,stderr){
+				if (error) {
+					console.log(error.stack);
+					console.log('player: Error code: '+error.code);
+				}
+				console.log('player Child Process STDOUT: '+stdout);
+				console.log('player Child Process STDERR: '+stderr);
+			});
+	}, 1500);
+}
+
 var gpio4 = gpio.export(4, {
 	direction: "in",
 	ready: function() {
@@ -14,43 +38,24 @@ var gpio4 = gpio.export(4, {
 		console.log('*  Ready to work  *');
 		console.log('*******************');
 
-   	player = exec('gpio write 0 0',
-						function(error,stdout,stderr){
-							if (error) {
-								console.log(error.stack);
-								console.log('player: Error code: '+error.code);
-							}
-							console.log('player Child Process STDOUT: '+stdout);
-							console.log('player Child Process STDERR: '+stderr);
-	});
+		blinkBlue();
+		
 
-	setTimeout(function () {
-		player = exec('gpio write 0 1',
-						function(error,stdout,stderr){
-							if (error) {
-								console.log(error.stack);
-								console.log('player: Error code: '+error.code);
-							}
-							console.log('player Child Process STDOUT: '+stdout);
-							console.log('player Child Process STDERR: '+stderr);
+		gpio4.on("change", function(val){
+			if (val == 1){
+				console.log('BUTTON WAS PUSHED!'.green);
+				var myts = new Date().getTime();
+				var currentId = 'vendor';
+				var currentElement = { timeStamp : myts, id : currentId };
+				var currentKey = myts + currentId;
+				fumpers[currentKey] = currentElement;
+
+				var response = [];
+				check(myts, currentId, response);
+				console.log('respones was ' + response);
+			}
 		});
-	}, 1500);
-
-gpio4.on("change", function(val){
-	if (val == 1){
-   			 console.log('BUTTON WAS PUSHED!'.green);
-   			 var myts = new Date().getTime();
-   			 var currentId = 'vendor';
-   			 var currentElement = { timeStamp : myts, id : currentId };
-   			 var currentKey = myts + currentId;
-   			 fumpers[currentKey] = currentElement;
-
-   			 var response = [];
-   			 check(myts, currentId, response);
-   			 console.log('respones was ' + response);
-   			}
-   		});
-}
+	}
 });
 
 app.configure(function(){
