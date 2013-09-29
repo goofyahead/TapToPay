@@ -15,6 +15,7 @@
     "redis" : "*",
     "express": "3.X",
     "gpio" : "*",
-    "pi-gpio" : "*"
+    "pi-gpio" : "*",
+    "sengrid" : "0.3.0"
   }
 }

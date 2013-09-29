@@ -201,9 +201,21 @@ app.post('/api/vendor', function (req, res){
 
 app.post('/api/result', function (req, res){
 	var result = req.body.result;
+
 	blueOff();
 	if (result == 'OK') {
-		// gpio22.set();
+
+		// var sendgrid  = require('sendgrid')(api_user, api_key);
+		// sendgrid.send({
+		//   to:       'goofyahead@gmail.com',
+		//   from:     globalVendor,
+		//   subject:  'Transaction done',
+		//   text:     'Your transactions from Alex of 2.00 went perfectly'
+		// }, function(err, json) {
+		//   if (err) { return console.error(err); }
+		//   console.log(json);
+		// });
+
 		greenBlink();
 		res.send(200);
 	} else {
