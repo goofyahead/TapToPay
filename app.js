@@ -154,7 +154,7 @@ function check(currentTimeStamp, currentId, response) {
 	for (var key in fumpers) {
 		console.log("compairing: " + Math.abs(currentTimeStamp - fumpers[key].timeStamp));
 		if (Math.abs(currentTimeStamp - fumpers[key].timeStamp) < 800 && currentId != fumpers[key].id) {
-			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id };
+			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount };
 			response.push(elementResponse);
 			console.log("added to reponse one match " + JSON.stringify(fumpers[key]));
 		}
