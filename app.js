@@ -181,8 +181,8 @@ function check(currentTimeStamp, currentId, response) {
 	for (var key in fumpers) {
 		//console.log("compairing: " + Math.abs(currentTimeStamp - fumpers[key].timeStamp));
 		if (Math.abs(currentTimeStamp - fumpers[key].timeStamp) < TIME_THRESHOLD && currentId != fumpers[key].id) {
-			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount,
-			store : fumpers[key].store, item : fumpers[key].item };
+			console.log('store: ' + fumpers[key].store);
+			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount, store : fumpers[key].store, item : fumpers[key].item };
 			response.push(elementResponse);
 			console.log("added to reponse one match " + JSON.stringify(elementResponse));
 		}
