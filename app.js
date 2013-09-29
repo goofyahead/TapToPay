@@ -193,7 +193,7 @@ app.post('/api/result', function (req, res){
 		greenBlink();
 		res.send(200);
 	} else {
-		greenBlink();
+		redBlink();
 		res.send(200);
 	}
 });
