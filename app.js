@@ -2,45 +2,57 @@ var gpio = require("gpio");
 var colors = require("colors");
 var express = require('express');
 var app = express();
+var exec = require('child_process').exec,
+    child;
 var port = process.env.PORT || 5000;
 var gpio22;
 
 // Flashing lights if LED connected to GPIO22
-gpio22 = gpio.export(17, {
-   ready: function() {
-   		console.log('led working');
-   		gpio22.set(0,function () {
-   			gpio.set(1, function () {
-   				console.log('should be up');
-   			});
-   			
-   		});
-   }
-});
-
-// var gpio4 = gpio.export(4, {
-//    direction: "in",
+// gpio22 = gpio.export(17, {
 //    ready: function() {
-//    	console.log('*******************');
-//    	console.log('*  Ready to work  *');
-//    	console.log('*******************');
-
-//    	gpio4.on("change", function(val){
-//    		if (val == 1){
-//    			console.log('BUTTON WAS PUSHED!'.green);
-//    			var myts = new Date().getTime();
-//    			var currentId = 'vendor';
-//    			var currentElement = { timeStamp : myts, id : currentId };
-// 			var currentKey = myts + currentId;
-// 			fumpers[currentKey] = currentElement;
-
-//    			var response = [];
-//    			check(myts, currentId, response);
-//    			console.log('respones was ' + response);
-//    		}
-//    	});
+//    		console.log('led working');
+//    		gpio22.set(0,function () {
+//    			gpio.set(1, function () {
+//    				console.log('should be up');
+//    			});
+   			
+//    		});
 //    }
 // });
+
+var gpio4 = gpio.export(4, {
+   direction: "in",
+   ready: function() {
+   	console.log('*******************');
+   	console.log('*  Ready to work  *');
+   	console.log('*******************');
+
+   	player = exec('gpio write 0 1',
+						function(error,stdout,stderr){
+							if (error) {
+								console.log(error.stack);
+								console.log('player: Error code: '+error.code);
+							}
+							console.log('player Child Process STDOUT: '+stdout);
+							console.log('player Child Process STDERR: '+stderr);
+						});
+
+   	gpio4.on("change", function(val){
+   		if (val == 1){
+   			console.log('BUTTON WAS PUSHED!'.green);
+   			var myts = new Date().getTime();
+   			var currentId = 'vendor';
+   			var currentElement = { timeStamp : myts, id : currentId };
+			var currentKey = myts + currentId;
+			fumpers[currentKey] = currentElement;
+
+   			var response = [];
+   			check(myts, currentId, response);
+   			console.log('respones was ' + response);
+   		}
+   	});
+   }
+});
 
 app.configure(function(){
 	app.use(express.static(__dirname + '/public'));
