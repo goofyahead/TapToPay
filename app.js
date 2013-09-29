@@ -6,7 +6,7 @@ var port = process.env.PORT || 5000;
 var gpio22;
 
 // Flashing lights if LED connected to GPIO22
-gpio22 = gpio.export(6, {
+gpio22 = gpio.export(17, {
    ready: function() {
    		console.log('led working');
    		gpio22.set();
