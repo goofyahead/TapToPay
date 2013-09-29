@@ -184,7 +184,7 @@ function check(currentTimeStamp, currentId, response) {
 			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount,
 			store : fumpers[key].store, item : fumpers[key].item };
 			response.push(elementResponse);
-			console.log("added to reponse one match " + JSON.stringify(fumpers[key]));
+			console.log("added to reponse one match " + JSON.stringify(elementResponse));
 		}
 	}
 }
@@ -235,11 +235,12 @@ app.post('/api/fump', function (req, res){
 			check(currentTimeStamp, currentId, response);
 			console.log('delay check');
 			console.log('number of fumps ' + Object.keys(fumpers).length);
-			res.send({id: 'no'});
 			if (response.length != 0){
 				blueOn();
+				res.send(response[0]);
 				console.log('MATCH MAKED'.green);
 			} else {
+				res.send({id: 'no'});
 				console.log('NO MATCH'.red);
 			}
 		}, 500);
