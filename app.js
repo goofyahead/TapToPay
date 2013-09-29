@@ -23,7 +23,7 @@ var gpio22;
 var gpio2 = require("pi-gpio");
 
 gpio2.open(13, "output", function(err) {     // Open pin 16 for output
-    gpio2.write(13, 1, function() {          // Set pin 16 high (1)                  // Close pin 16
+    gpio2.write(13, 0, function() {          // Set pin 16 high (1)                  // Close pin 16
     	console.log('glow');
     });
 });
@@ -47,7 +47,7 @@ var gpio4 = gpio.export(4, {
 
 gpio4.on("change", function(val){
 	if (val == 1){
-   			 gpio2.write(11, 0, function() {          // Set pin 16 high (1)
+   			 gpio2.write(13, 1, function() {          // Set pin 16 high (1)
 		        // gpio2.close(11);                     // Close pin 16
 		    });
    			 console.log('BUTTON WAS PUSHED!'.green);
