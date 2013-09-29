@@ -7,6 +7,54 @@ child;
 var port = process.env.PORT || 5000;
 var gpio22;
 
+function blueOn(){
+	player = exec('gpio write 0 0',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+}
+
+function blueOff(){
+	player = exec('gpio write 0 1',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+}
+
+function greenBlink() {
+	player = exec('gpio write 3 0',
+		function(error,stdout,stderr){
+			if (error) {
+				console.log(error.stack);
+				console.log('player: Error code: '+error.code);
+			}
+			console.log('player Child Process STDOUT: '+stdout);
+			console.log('player Child Process STDERR: '+stderr);
+		});
+
+	setTimeout(function () {
+		player = exec('gpio write 3 1',
+			function(error,stdout,stderr){
+				if (error) {
+					console.log(error.stack);
+					console.log('player: Error code: '+error.code);
+				}
+				console.log('player Child Process STDOUT: '+stdout);
+				console.log('player Child Process STDERR: '+stderr);
+			});
+	}, 1500);
+}
+
 function blinkBlue() {
 	player = exec('gpio write 0 0',
 		function(error,stdout,stderr){
@@ -39,7 +87,6 @@ var gpio4 = gpio.export(4, {
 		console.log('*******************');
 
 		blinkBlue();
-		
 
 		gpio4.on("change", function(val){
 			if (val == 1){
@@ -79,14 +126,17 @@ function check(currentTimeStamp, currentId, response) {
 
 app.post('/api/result', function (req, res){
 	var result = req.body.result;
-
+	blueOff();
 	if (result == 'OK') {
 		// gpio22.set();
+		greenBlink();
 	}
 });
 
 app.post('/api/fump', function (req, res){
 	// gpio22.set(0);
+	blueOn();
+
 	var response = [];
 	var currentTimeStamp = req.body.timestamp;
 	var currentId = req.body.id;
