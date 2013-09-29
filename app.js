@@ -7,27 +7,6 @@ child;
 var port = process.env.PORT || 5000;
 var gpio22;
 
-// Flashing lights if LED connected to GPIO22
-// gpio22 = gpio.export(17, {
-//    ready: function() {
-//    		console.log('led working');
-//    		gpio22.set(0,function () {
-//    			gpio.set(1, function () {
-//    				console.log('should be up');
-//    			});
-
-//    		});
-//    }
-// });
-
-var gpio2 = require("pi-gpio");
-
-gpio2.open(13, "output", function(err) {     // Open pin 16 for output
-    gpio2.write(13, 0, function() {          // Set pin 16 high (1)                  // Close pin 16
-    	console.log('glow');
-    });
-});
-
 var gpio4 = gpio.export(4, {
 	direction: "in",
 	ready: function() {
@@ -35,21 +14,30 @@ var gpio4 = gpio.export(4, {
 		console.log('*  Ready to work  *');
 		console.log('*******************');
 
-   	// player = exec('gpio write 0 1',
-				// 		function(error,stdout,stderr){
-				// 			if (error) {
-				// 				console.log(error.stack);
-				// 				console.log('player: Error code: '+error.code);
-				// 			}
-				// 			console.log('player Child Process STDOUT: '+stdout);
-				// 			console.log('player Child Process STDERR: '+stderr);
-				// 		});
+   	player = exec('gpio write 0 0',
+						function(error,stdout,stderr){
+							if (error) {
+								console.log(error.stack);
+								console.log('player: Error code: '+error.code);
+							}
+							console.log('player Child Process STDOUT: '+stdout);
+							console.log('player Child Process STDERR: '+stderr);
+	});
+
+	setTimeout(function () {
+		player = exec('gpio write 0 1',
+						function(error,stdout,stderr){
+							if (error) {
+								console.log(error.stack);
+								console.log('player: Error code: '+error.code);
+							}
+							console.log('player Child Process STDOUT: '+stdout);
+							console.log('player Child Process STDERR: '+stderr);
+		});
+	}, 1500);
 
 gpio4.on("change", function(val){
 	if (val == 1){
-   			 gpio2.write(13, 1, function() {          // Set pin 16 high (1)
-		        // gpio2.close(11);                     // Close pin 16
-		    });
    			 console.log('BUTTON WAS PUSHED!'.green);
    			 var myts = new Date().getTime();
    			 var currentId = 'vendor';
