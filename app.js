@@ -7,6 +7,7 @@ child;
 var port = process.env.PORT || 5000;
 var gpio22;
 var TIME_THRESHOLD = 1400;
+var globalVendor,globalAmount,globalStore,globalItem;
 
 player = exec('gpio mode 0 out',
 		function(error,stdout,stderr){
@@ -155,7 +156,8 @@ var gpio4 = gpio.export(4, {
 				console.log('BUTTON WAS PUSHED!'.green);
 				var myts = new Date().getTime();
 				var currentId = 'taptopaymerchant@gmail.com';
-				var currentElement = { timeStamp : myts, id : currentId, amount: '2.00' };
+				var currentElement = { timeStamp : myts, id : globalVendor, amount: globalAmount, 
+					store: globalStore, item : globalItem};
 				var currentKey = myts + currentId;
 				fumpers[currentKey] = currentElement;
 
@@ -179,7 +181,8 @@ function check(currentTimeStamp, currentId, response) {
 	for (var key in fumpers) {
 		//console.log("compairing: " + Math.abs(currentTimeStamp - fumpers[key].timeStamp));
 		if (Math.abs(currentTimeStamp - fumpers[key].timeStamp) < TIME_THRESHOLD && currentId != fumpers[key].id) {
-			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount };
+			var elementResponse = {timeStamp : fumpers[key].timeStamp, id : fumpers[key].id, amount : fumpers[key].amount,
+			store : fumpers[key].store, item : fumpers[key].item };
 			response.push(elementResponse);
 			console.log("added to reponse one match " + JSON.stringify(fumpers[key]));
 		}
@@ -188,6 +191,10 @@ function check(currentTimeStamp, currentId, response) {
 
 app.post('/api/vendor', function (req, res){
 	var result = req.body;
+	globalItem = result.item;
+	globalStore = result.store;
+	globalAmount = result.price;
+	globalVendor = result.email;
 	console.log(result);
 	res.send(200);
 });
