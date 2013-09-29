@@ -54,7 +54,7 @@ function check(currentTimeStamp, currentId, response) {
 	}
 }
 
-app.post('/api/fump', function (req, res){
+app.post('/api/result', function (req, res){
 	var result = req.body.result;
 
 	if (result == 'OK') {
