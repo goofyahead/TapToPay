@@ -186,6 +186,12 @@ function check(currentTimeStamp, currentId, response) {
 	}
 }
 
+app.post('/api/vendor', function (req, res){
+	var result = req.body;
+	console.log(result);
+	res.send(200);
+});
+
 app.post('/api/result', function (req, res){
 	var result = req.body.result;
 	blueOff();
