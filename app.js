@@ -159,9 +159,9 @@ var gpio4 = gpio.export(4, {
 				var currentKey = myts + currentId;
 				fumpers[currentKey] = currentElement;
 
-				var response = [];
-				check(myts, currentId, response);
-				console.log('respones was ' + response);
+				// var response = [];
+				// check(myts, currentId, response);
+				// console.log('respones was ' + response);
 			}
 		});
 	}
@@ -221,13 +221,15 @@ app.post('/api/fump', function (req, res){
 			console.log('checking with ' + currentTimeStamp + ' and ' + currentId);
 			check(currentTimeStamp, currentId, response);
 			console.log('delay check');
-			console.log('number of fumps ' + fumpers.length);
+			console.log('number of fumps ' + Object.keys(fumpers).length);
 			res.send({'response_delayed': response});
 			if (response.length != 0){
 				blueOn();
 				console.log('MATCH MAKED'.green);
+			} else {
+				console.log('NO MATCH'.red);
 			}
-		}, 1000);
+		}, 500);
 	} else {
 		blueOn();
 		console.log('MATCH MAKED'.green);
