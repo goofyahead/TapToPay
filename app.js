@@ -222,9 +222,14 @@ app.post('/api/fump', function (req, res){
 			console.log('delay check');
 			console.log('number of fumps ' + fumpers.length);
 			res.send({'response_delayed': response});
+			if (response.length != 0){
+				blueOn();
+				console.log('MATCH MAKED'.green);
+			}
 		}, 1000);
 	} else {
 		blueOn();
+		console.log('MATCH MAKED'.green);
 		res.send({'response_ok': response});
 	}
 });
