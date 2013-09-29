@@ -201,7 +201,6 @@ app.post('/api/result', function (req, res){
 
 app.post('/api/fump', function (req, res){
 	// gpio22.set(0);
-	
 
 	var response = [];
 	var currentTimeStamp = req.body.timestamp;
@@ -223,16 +222,10 @@ app.post('/api/fump', function (req, res){
 			console.log('delay check');
 			console.log('number of fumps ' + fumpers.length);
 			res.send({'response_delayed': response});
-			setTimeout(function(){ 
-				delete fumpers[currentKey];
-			},2000);
 		}, 1000);
 	} else {
 		blueOn();
 		res.send({'response_ok': response});
-		setTimeout(function(){
-			delete fumpers[currentKey];
-		},2000);
 	}
 });
 
